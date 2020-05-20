@@ -1,0 +1,76 @@
+syntax = "proto3";
+option go_package = "evilnet";
+
+message EvilNetReqRegMsg {
+    string key = 1;
+    string sonkey = 2;
+    string name = 3;
+    string localaddr = 4;
+}
+
+message EvilNetRspRegMsg {
+    string sonkey = 1;
+    string fathername = 2;
+    string newname = 3;
+    string localaddr = 4;
+    string globaladdr = 5;
+    string result = 6;
+}
+
+message EvilNetRouterMsg {
+    string src = 1;
+    string dst = 2;
+    bytes data = 3;
+    string id = 4;
+}
+
+message EvilNetReqConnMsg {
+    string key = 1;
+    string proto = 2;
+    string localaddr = 3;
+    string globaladdr = 4;
+    repeated string param = 5;
+    string randomkey = 6;
+    int32 timeoutms = 7;
+}
+
+message EvilNetRspConnMsg {
+    string key = 1;
+    string proto = 2;
+    string result = 3;
+    string localaddr = 4;
+    string globaladdr = 5;
+    repeated string param = 6;
+    string randomkey = 7;
+    int32 timeoutms = 8;
+}
+
+message EvilNetPingMsg {
+    int64 time = 1;
+}
+
+message EvilNetPongMsg {
+    int64 time = 1;
+    repeated string proto = 2;
+}
+
+message EvilNetMsg {
+    enum TYPE {
+        REQREG = 0;
+        RSPREG = 1;
+        ROUTER = 2;
+        REQCONN = 3;
+        RSPCONN = 4;
+        PING = 5;
+        PONG = 6;
+    }
+
+    int32 type = 1;
+    EvilNetReqRegMsg reqRegMsg = 2;
+    EvilNetRspRegMsg rspRegMsg = 3;
+    EvilNetRouterMsg routerMsg = 4;
+    EvilNetReqConnMsg reqConnMsg = 5;
+    EvilNetRspConnMsg rspConnMsg = 6;
+    EvilNetPingMsg pingMsg = 7;
+    EvilNetPongMsg pongMsg = 8;
+}
